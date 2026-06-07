@@ -1,0 +1,92 @@
+package br.com.cdl.moviehub.modelos;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class Titulo {
+    private String nome;
+    private int anoDeLancamento;
+    private int totalEmMinutos;
+    private String classificacao;
+    private boolean incluidoNoPlano;
+    private List<Double> avaliacoes;
+
+    public Titulo() {
+        this.avaliacoes = new ArrayList<>();
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public int getAnoDeLancamento() {
+        return anoDeLancamento;
+    }
+
+    public void setAnoDeLancamento(int anoDeLancamento) {
+        if (anoDeLancamento < 1800 || anoDeLancamento > 2030) {
+            throw new IllegalArgumentException("Ano de lançamento inválido");
+        }
+        this.anoDeLancamento = anoDeLancamento;
+    }
+
+    public int getTotalEmMinutos() {
+        return totalEmMinutos;
+    }
+
+    public void setTotalEmMinutos(int totalEmMinutos) {
+        if (totalEmMinutos <= 0) {
+            throw new IllegalArgumentException("Duração inválida");
+        }
+        this.totalEmMinutos = totalEmMinutos;
+    }
+
+    public String getClassificacao() {
+        return classificacao;
+    }
+
+    public void setClassificacao(String classificacao) {
+        this.classificacao = classificacao;
+    }
+
+    public boolean isIncluidoNoPlano() {
+        return incluidoNoPlano;
+    }
+
+    public void setIncluidoNoPlano(boolean incluidoNoPlano) {
+        this.incluidoNoPlano = incluidoNoPlano;
+    }
+
+    public void avalia(double nota) {
+        if (nota < 0 || nota > 10) {
+            throw new IllegalArgumentException("Nota inválida");
+        }
+        this.avaliacoes.add(nota);
+    }
+
+    public double getMedia() {
+        if (avaliacoes.isEmpty()) {
+            return 0;
+        }
+        return avaliacoes.stream().mapToDouble(Double::doubleValue).average().orElse(0.0);
+    }
+
+    public abstract int getDuracaoEmMinutos();
+
+    public void exibeFichaTecnica() {
+        System.out.println("===========================================");
+        System.out.println("Ficha Técnica");
+        System.out.println("===========================================");
+        System.out.println("Nome: " + this.nome);
+        System.out.println("Ano de Lançamento: " + this.anoDeLancamento);
+        System.out.println("Duração: " + this.getDuracaoEmMinutos() + " minutos");
+        System.out.println("Classificação: " + this.classificacao);
+        System.out.println("Incluído no Plano: " + this.incluidoNoPlano);
+        System.out.println("Média das Avaliações: " + String.format("%.1f", this.getMedia()));
+        System.out.println("===========================================");
+    }
+}
