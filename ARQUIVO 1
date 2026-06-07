@@ -1,29 +1,35 @@
 package br.com.cdl.moviehub.modelos;
 
-import java.util.Scanner;
+public class Anime extends Titulo {
+    private String estúdio;
+    private int numEpisódios;
 
-public class Principal {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        
-      
-        Filme filme1 = new Filme();
-        System.out.println("Kung FU Panda 2");
-        filme1.setNome(scanner.nextLine());
-        System.out.println("10 de junho de 2011");
-        filme1.setAnoDeLancamento(Integer.parseInt(scanner.nextLine().trim()));
-        System.out.println("1 hora e 35 minutos");
-        filme1.setTotalEmMinutos(Integer.parseInt(scanner.nextLine().trim()));
-        System.out.println("Infantil/ação");
-        filme1.setClassificacao(scanner.nextLine());
-        System.out.println("Jennifer YUH Nelson");
-        filme1.setDiretor(scanner.nextLine());
-        System.out.println("5 estrelas");
-        int qtd = Integer.parseInt(scanner.nextLine().trim());
-        for (int i = 0; i < qtd; i++) {
-            System.out.println("5 " + (i + 1) + ":");
-            filme1.avalia(Double.parseDouble(scanner.nextLine().trim()));
-        }
-        
-     
+    public String getEstúdio() {
+        return estúdio;
+    }
+
+    public void setEstúdio(String estúdio) {
+        this.estúdio = estúdio;
+    }
+
+    public int getNumEpisódios() {
+        return numEpisódios;
+    }
+
+    public void setNumEpisódios(int numEpisódios) {
+        this.numEpisódios = numEpisódios;
+    }
+
+    @Override
+    public int getDuracaoEmMinutos() {
+        return getTotalEmMinutos();
+    }
+
+    @Override
+    public void exibeFichaTecnica() {
+        super.exibeFichaTecnica();
+        System.out.println("Estúdio: " + this.estúdio);
+        System.out.println("Número de Episódios: " + this.numEpisódios);
+        System.out.println("===========================================");
+    }
 }
